@@ -1,0 +1,11 @@
+#join {
+  display: grid;
+  place-items: center;
+  /*align-items: center;
+  grid-template-rows: 1fr 1fr;*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  grid-row-gap: 10px;
+}
