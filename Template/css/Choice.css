@@ -1,0 +1,27 @@
+.btn {
+  font-family: "SCDream5";
+  border-radius: 3px;
+  font-size: 25px;
+  border: none;
+  width: 40%;
+  padding: 10px 100px;
+  display: block;
+  margin: auto;
+}
+
+button:hover {
+  background: #0066ff;
+}
+
+.make_meeting {
+  margin-bottom: 10px;
+  margin-top: 500px;
+}
+
+/*
+
+.join_meeting {
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, 50%);
+} */
