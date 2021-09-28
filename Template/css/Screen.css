@@ -1,0 +1,15 @@
+.fullsize {
+  min-height: 100vh;
+}
+
+button {
+  border-radius: 10px;
+  font-size: 1.5rem;
+  border: none;
+  width: 20%;
+  padding: 10px 100px;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
