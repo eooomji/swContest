@@ -2,14 +2,21 @@
   min-height: 100vh;
 }
 
-button {
+.row {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+}
+
+.btn {
   border-radius: 10px;
   font-size: 1.5rem;
   border: none;
-  width: 20%;
-  padding: 10px 100px;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  width: 19.5%;
+  padding: 10px;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: #0066ff;
 }
