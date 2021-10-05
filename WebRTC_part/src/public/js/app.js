@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io();    // socket_io를 써주기 위함
 
 const myFace = document.getElementById("myFace");
 const muteBtn = document.getElementById("mute");
@@ -94,6 +94,7 @@ camerasSelect.addEventListener("input", handleCameraChange);
 
 // Welcome Form (join a room)
 
+// app.js welcome div에서 form을 가져옴
 const welcome = document.getElementById("welcome");
 const welcomeForm = welcome.querySelector("form");
 
@@ -106,11 +107,15 @@ async function initCall() {
 
 async function handleWelcomeSubmit(event) {
   event.preventDefault();
-  const input = welcomeForm.querySelector("input");
+  const input = welcomeForm.querySelector("input"); // form 안에서 input을 가져옴
   await initCall();
-  socket.emit("join_room", input.value);
+  socket.emit("join_room", input.value);    // webSocket에서 socket.send 느낌. 메세지 보낼 필요 없고 원하는 거 emit만 해주면 됨
+  // emit하면 argument를 보낼 수 있음. argument는 object가 될 수 있음 (webSocket에서 쓴 nickname 등과 같은)
+  // 1. 특정한 event를 emit 해줄 수 있음. 어떤 이름이든 상관X
+  // 2. object를 전송할 수 있음. 전처럼 string만 전송할 필요 없음
+  // (1)event (2)payload (3)function
   roomName = input.value;
-  input.value = "";
+  input.value = ""; // input.value 비워주기
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit);
