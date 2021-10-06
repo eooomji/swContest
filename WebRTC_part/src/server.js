@@ -1,3 +1,4 @@
+// Backend
 import http from "http";
 import SocketIO from "socket.io";
 import express from "express";    
@@ -14,9 +15,10 @@ const httpServer = http.createServer(app); // webSocket을 하려면 꼭 필요�
 const wsServer = SocketIO(httpServer);
 
 // socket에는 이미 room 기능이 내장되어 있음
+// socket.to(room) : room 전체에 message를 보낼 수 있음 | emit("an event") : string인 an event를 보낼 수 있음
 wsServer.on("connection", (socket) => {
     socket.on("join_room", (roomName) => {  // join_room : event 
-        socket.to(roomName).emit("welcome");
+        socket.to(roomName).emit("welcome");  // roomName 방에 들어가서 welcome 채팅 보냄
 });
     socket.on("offer", (offer, roomName) => {
         socket.to(roomName).emit("offer", offer);
@@ -74,13 +76,14 @@ httpServer.listen(3000, handleListen);
 //     return wsServer.sockets.adapter.rooms.get(roomName)?.size;
 // }
 
+// SocketIO에서는 기본적으로 user와 server 사이에 private room이 존재
 // wsServer.on("connection", (socket) => {
 //     socket["nickname"] = "Anon";
-//     socket.onAny((event) => {
+//     socket.onAny((event) => {  // onAny : 어떤 event에서도 console.log 가능
 //         console.log(`Socket Event: ${event}`);
 //     });
 //     socket.on("enter_room", (roomName, done) => {
-//         socket.join(roomName);
+//         socket.join(roomName); // roomName의 방으로 참가
 //         done();
 //         socket.to(roomName).emit("welcome", socket.nickname, countRoom(roomName));
 //         wsServer.sockets.emit("room_change", publicRooms());
@@ -89,14 +92,14 @@ httpServer.listen(3000, handleListen);
 //         socket.to(roomName).emit("offer", offer);
 //     });
 //     socket.on("disconnecting", () => {
-//         socket.rooms.forEach((room) => 
-//             socket.to(room).emit("bye", socket.nickname, countRoom(room) - 1)
+//         socket.rooms.forEach((room) =>  // socket.rooms : socket이 어느 방에 있는지 알고 싶을 때
+//             socket.to(room).emit("bye", socket.nickname, countRoom(room) - 1)  // disconnect -> bye 출력
 //         );
 //     });
 //     socket.on("disconnect", () => {
 //         wsServer.sockets.emit("room_change", publicRooms());
 //     });
-//     socket.on("new_message", (msg, room, done) => {
+//     socket.on("new_message", (msg, room, done) => {  // 어떤 방으로 message를 보내야하는지 알 수 있음
 //         socket.to(room).emit("new_message", `${socket.nickname}: ${msg}`);
 //         done();
 //     });
