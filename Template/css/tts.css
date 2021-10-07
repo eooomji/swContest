@@ -1,0 +1,21 @@
+.fullsize {
+  text-align: center;
+  min-height: 100vh;
+}
+
+.btn {
+  border-radius: 10px;
+  font-size: 1.5rem;
+  border: none;
+  width: 19.5%;
+  padding: 10px;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: #0066ff;
+}
+
+select {
+  width: 10%;
+}
