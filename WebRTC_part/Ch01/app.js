@@ -1,6 +1,5 @@
-// pug의 ul, form
 const messageList = document.querySelector("ul");
-const messageList = document.querySelector("#nick");
+const nickForm = document.querySelector("#nick");
 const messageForm = document.querySelector("#message");
 const socket = new WebSocket(`ws://${window.location.host}`);
 
@@ -13,16 +12,17 @@ function handleSubmit(event) {
     event.preventDefault();
     const input = messageForm.querySelector("input");
     socket.send(makeMessage("new_message", input.value));   // backend로 message 전송
-    const li = document.createElement("li");    // li 생성
-    li.innerText = `You: ${input.value}`;
-    messageList.append(li);
+    // const li = document.createElement("li");    // li 생성
+    // li.innerText = `You: ${input.value}`;
+    // messageList.append(li);
     input.value = "";   // input.value 초기화
 }
 
 function handleNickSubmit(event) {
     event.preventDefault();
     const input = nickForm.querySelector("input");
-    socket.send(makeMessage("new_message", input.value));
+    socket.send(makeMessage("nickname", input.value));
+    input.value ="";
 }
 
 // object to string : nickname과 message를 구분 
@@ -52,8 +52,3 @@ socket.addEventListener("close", () => {
 
 messageForm.addEventListener("submit", handleSubmit);
 nickForm.addEventListener("submit", handleNickSubmit);
-
-// message를 보내기까지 10초 기다리기
-// setTimeout(() => {
-//     socket.send("hello from the browser");
-// }, 10000);
