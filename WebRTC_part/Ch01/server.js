@@ -24,15 +24,16 @@ function onSocketClose() {
     console.log("Disconnected from the Browser X");
 }
 
-function onSocketMessage(msg) {
-    const parsed = JSON.parse(msg);
-    switch (parsed.type) {
-        case "new_message":
-            sockets.forEach(aSocket => aSocket.send(`${socket.nickname}: ${message.payload}`));
-        case "nickname":
-            socket["nickname"] = message.payload;
-    }
-}
+// function onSocketMessage(msg) {
+//     const message = JSON.parse(msg);
+//     switch (message.type) {
+//         case "new_message":
+//             sockets.forEach((aSocket) => 
+//               aSocket.send(`${socket.nickname}: ${message.payload}`));
+//         case "nickname":
+//             socket["nickname"] = message.payload;
+//     }
+// }
 
 // fake DB
 const sockets = [];
@@ -43,8 +44,17 @@ wss.on("connection", (socket) => {
     socket["nickname"] = "Anon";    // nickname을 지정하지 않은 사람들
     console.log("Connected to Browser !");
     socket.on("close", onSocketClose);
-    socket.on("message", onSocketMessage);
-    socket.send("Hello!");
+    socket.on("message", (msg) => {
+      const message = JSON.parse(msg);
+      switch (message.type) {
+        case "new_message":
+          sockets.forEach((aSocket) =>
+            aSocket.send(`${socket.nickname}: ${message.payload}`)
+          );
+        case "nickname":
+          socket["nickname"] = message.payload;
+      }
+    // socket.on("message", onSocketMessage);
+  });
 });
-
 server.listen(3000, handleListen);
